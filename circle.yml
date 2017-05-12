@@ -1,0 +1,11 @@
+machine:
+  services:
+    - docker
+
+deployment:
+  production:
+    branch: master
+    commands: 
+      - docker build -t ouwen/tensorflow_build:$CIRCLE_BUILD_NUM .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push ouwen/tensorflow_build:rc-$CIRCLE_BUILD_NUM
